@@ -1,0 +1,26 @@
+3-6 租用游艇问题
+import java.util.Scanner;  
+public class boat {  
+public static void main(String[] args){  
+Scanner input = new Scanner(System.in);
+int n;  
+int[][] fee; 
+while (true){
+  n = input.nextInt();
+  fee = new int[n][n];  
+for(int row=0; row<n-1; row++)   //起始站
+for(int col=row+1; col<n; col++)  //终点站
+fee[row][col] = input.nextInt();  //输入出租站row到col站的租金为 fee[row][col]
+for(int k=2; k<n; k++)  //从两个出租站开始,逐步计算每几个出租站之间的最优解，最终计算n-1个出租站合并的最优解
+for(int i=0; i<n-k; i++){
+int j = i+k;
+for(int p =i+1; p<j; p++){   //从i+1个出租站到第j+1个出租站所需金额
+int tmp = fee[i][p] + fee[p][j];   //记录下经过p站时的租金
+if(fee[i][j] > tmp)     //如果经过p站比原来更便宜 
+fee[i][j] = tmp;    //则把更便宜的值记录下来
+}
+}
+System.out.println(fee[0][n-1]);    //fee[i][j]: 从第i个出租站到第j个出租站所需的最少租金，可见fee[0][n-1]即为所求
+}
+}
+}
